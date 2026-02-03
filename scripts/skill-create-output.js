@@ -86,11 +86,11 @@ class SkillCreateOutput {
   }
 
   header() {
-    const subtitle = `Extracting patterns from ${chalk.cyan(this.repoName)}`;
+    const subtitle = `正在从 ${chalk.cyan(this.repoName)} 提取模式`;
 
     console.log('\n');
     console.log(chalk.bold(chalk.magenta('╔════════════════════════════════════════════════════════════════╗')));
-    console.log(chalk.bold(chalk.magenta('║')) + chalk.bold('  🔮 ECC Skill Creator                                          ') + chalk.bold(chalk.magenta('║')));
+    console.log(chalk.bold(chalk.magenta('║')) + chalk.bold('  🔮 ECC 技能创建器 (Skill Creator)                             ') + chalk.bold(chalk.magenta('║')));
     console.log(chalk.bold(chalk.magenta('║')) + `     ${subtitle}${' '.repeat(Math.max(0, 55 - stripAnsi(subtitle).length))}` + chalk.bold(chalk.magenta('║')));
     console.log(chalk.bold(chalk.magenta('╚════════════════════════════════════════════════════════════════╝')));
     console.log('');
@@ -98,30 +98,30 @@ class SkillCreateOutput {
 
   async analyzePhase(data) {
     const steps = [
-      { name: 'Parsing git history...', duration: 300 },
-      { name: `Found ${chalk.yellow(data.commits)} commits`, duration: 200 },
-      { name: 'Analyzing commit patterns...', duration: 400 },
-      { name: 'Detecting file co-changes...', duration: 300 },
-      { name: 'Identifying workflows...', duration: 400 },
-      { name: 'Extracting architecture patterns...', duration: 300 },
+      { name: '正在解析 git 历史...', duration: 300 },
+      { name: `发现 ${chalk.yellow(data.commits)} 次提交`, duration: 200 },
+      { name: '正在分析提交模式...', duration: 400 },
+      { name: '正在检测文件协同更改...', duration: 300 },
+      { name: '正在识别工作流...', duration: 400 },
+      { name: '正在提取架构模式...', duration: 300 },
     ];
 
-    await animateProgress('Analyzing Repository', steps);
+    await animateProgress('正在分析仓库', steps);
   }
 
   analysisResults(data) {
     console.log('\n');
-    console.log(box('📊 Analysis Results', `
-${chalk.bold('Commits Analyzed:')} ${chalk.yellow(data.commits)}
-${chalk.bold('Time Range:')}       ${chalk.gray(data.timeRange)}
-${chalk.bold('Contributors:')}     ${chalk.cyan(data.contributors)}
-${chalk.bold('Files Tracked:')}    ${chalk.green(data.files)}
+    console.log(box('📊 分析结果', `
+${chalk.bold('已分析提交:')}     ${chalk.yellow(data.commits)}
+${chalk.bold('时间范围:')}       ${chalk.gray(data.timeRange)}
+${chalk.bold('贡献者:')}         ${chalk.cyan(data.contributors)}
+${chalk.bold('跟踪文件:')}       ${chalk.green(data.files)}
 `));
   }
 
   patterns(patterns) {
     console.log('\n');
-    console.log(chalk.bold(chalk.cyan('🔍 Key Patterns Discovered:')));
+    console.log(chalk.bold(chalk.cyan('🔍 发现的关键模式:')));
     console.log(chalk.gray('─'.repeat(50)));
 
     patterns.forEach((pattern, i) => {
@@ -129,38 +129,38 @@ ${chalk.bold('Files Tracked:')}    ${chalk.green(data.files)}
       const confidenceBar = progressBar(Math.round(confidence * 100), 15);
       console.log(`
   ${chalk.bold(chalk.yellow(`${i + 1}.`))} ${chalk.bold(pattern.name)}
-     ${chalk.gray('Trigger:')} ${pattern.trigger}
-     ${chalk.gray('Confidence:')} ${confidenceBar}
+     ${chalk.gray('触发条件:')} ${pattern.trigger}
+     ${chalk.gray('置信度:')}   ${confidenceBar}
      ${chalk.dim(pattern.evidence)}`);
     });
   }
 
   instincts(instincts) {
     console.log('\n');
-    console.log(box('🧠 Instincts Generated', instincts.map((inst, i) =>
+    console.log(box('🧠 已生成的直觉', instincts.map((inst, i) =>
       `${chalk.yellow(`${i + 1}.`)} ${chalk.bold(inst.name)} ${chalk.gray(`(${Math.round(inst.confidence * 100)}%)`)}`
     ).join('\n')));
   }
 
   output(skillPath, instinctsPath) {
     console.log('\n');
-    console.log(chalk.bold(chalk.green('✨ Generation Complete!')));
+    console.log(chalk.bold(chalk.green('✨ 生成完成!')));
     console.log(chalk.gray('─'.repeat(50)));
     console.log(`
-  ${chalk.green('📄')} ${chalk.bold('Skill File:')}
+  ${chalk.green('📄')} ${chalk.bold('技能文件:')}
      ${chalk.cyan(skillPath)}
 
-  ${chalk.green('🧠')} ${chalk.bold('Instincts File:')}
+  ${chalk.green('🧠')} ${chalk.bold('直觉文件:')}
      ${chalk.cyan(instinctsPath)}
 `);
   }
 
   nextSteps() {
-    console.log(box('📋 Next Steps', `
-${chalk.yellow('1.')} Review the generated SKILL.md
-${chalk.yellow('2.')} Import instincts: ${chalk.cyan('/instinct-import <path>')}
-${chalk.yellow('3.')} View learned patterns: ${chalk.cyan('/instinct-status')}
-${chalk.yellow('4.')} Evolve into skills: ${chalk.cyan('/evolve')}
+    console.log(box('📋 下一步', `
+${chalk.yellow('1.')} 审查生成的 SKILL.md
+${chalk.yellow('2.')} 导入直觉: ${chalk.cyan('/instinct-import <path>')}
+${chalk.yellow('3.')} 查看已学习的模式: ${chalk.cyan('/instinct-status')}
+${chalk.yellow('4.')} 演进为技能: ${chalk.cyan('/evolve')}
 `));
     console.log('\n');
   }
@@ -185,35 +185,35 @@ async function demo() {
 
   output.analysisResults({
     commits: 200,
-    timeRange: 'Nov 2024 - Jan 2025',
+    timeRange: '2024年11月 - 2025年1月',
     contributors: 4,
     files: 847,
   });
 
   output.patterns([
     {
-      name: 'Conventional Commits',
-      trigger: 'when writing commit messages',
+      name: '约定式提交 (Conventional Commits)',
+      trigger: '编写提交信息时',
       confidence: 0.85,
-      evidence: 'Found in 150/200 commits (feat:, fix:, refactor:)',
+      evidence: '在 150/200 次提交中发现 (feat:, fix:, refactor:)',
     },
     {
-      name: 'Client/Server Component Split',
-      trigger: 'when creating Next.js pages',
+      name: '客户端/服务端组件分离',
+      trigger: '创建 Next.js 页面时',
       confidence: 0.90,
-      evidence: 'Observed in markets/, premarkets/, portfolio/',
+      evidence: '在 markets/, premarkets/, portfolio/ 中观察到',
     },
     {
-      name: 'Service Layer Architecture',
-      trigger: 'when adding backend logic',
+      name: '服务层架构',
+      trigger: '添加后端逻辑时',
       confidence: 0.85,
-      evidence: 'Business logic in services/, not routes/',
+      evidence: '业务逻辑在 services/ 中，而非 routes/ 中',
     },
     {
-      name: 'TDD with E2E Tests',
-      trigger: 'when adding features',
+      name: '带 E2E 测试的 TDD',
+      trigger: '添加功能时',
       confidence: 0.75,
-      evidence: '9 E2E test files, test(e2e) commits common',
+      evidence: '9 个 E2E 测试文件，常见 test(e2e) 提交',
     },
   ]);
 

@@ -32,15 +32,15 @@ async function main() {
 
   if (recentSessions.length > 0) {
     const latest = recentSessions[0];
-    log(`[SessionStart] Found ${recentSessions.length} recent session(s)`);
-    log(`[SessionStart] Latest: ${latest.path}`);
+    log(`[会话启动] 发现 ${recentSessions.length} 个最近的会话`);
+    log(`[会话启动] 最新: ${latest.path}`);
   }
 
   // Check for learned skills
   const learnedSkills = findFiles(learnedDir, '*.md');
 
   if (learnedSkills.length > 0) {
-    log(`[SessionStart] ${learnedSkills.length} learned skill(s) available in ${learnedDir}`);
+    log(`[会话启动] 在 ${learnedDir} 中有 ${learnedSkills.length} 个已学习的技能可用`);
   }
 
   // Check for available session aliases
@@ -48,17 +48,17 @@ async function main() {
 
   if (aliases.length > 0) {
     const aliasNames = aliases.map(a => a.name).join(', ');
-    log(`[SessionStart] ${aliases.length} session alias(es) available: ${aliasNames}`);
-    log(`[SessionStart] Use /sessions load <alias> to continue a previous session`);
+    log(`[会话启动] 有 ${aliases.length} 个会话别名可用: ${aliasNames}`);
+    log(`[会话启动] 使用 /sessions load <别名> 来继续之前的会话`);
   }
 
   // Detect and report package manager
   const pm = getPackageManager();
-  log(`[SessionStart] Package manager: ${pm.name} (${pm.source})`);
+  log(`[会话启动] 包管理器: ${pm.name} (${pm.source})`);
 
   // If package manager was detected via fallback, show selection prompt
   if (pm.source === 'fallback' || pm.source === 'default') {
-    log('[SessionStart] No package manager preference found.');
+    log('[会话启动] 未找到包管理器偏好设置。');
     log(getSelectionPrompt());
   }
 
@@ -66,6 +66,6 @@ async function main() {
 }
 
 main().catch(err => {
-  console.error('[SessionStart] Error:', err.message);
+  console.error('[会话启动] 错误:', err.message);
   process.exit(0); // Don't block on errors
 });

@@ -299,7 +299,7 @@ function getSessionTitle(sessionPath) {
   const content = getSessionContent(sessionPath);
   const metadata = parseSessionMetadata(content);
 
-  return metadata.title || 'Untitled Session';
+  return metadata.title || '未命名会话';
 }
 
 /**
@@ -331,7 +331,7 @@ function writeSessionContent(sessionPath, content) {
     fs.writeFileSync(sessionPath, content, 'utf8');
     return true;
   } catch (err) {
-    log(`[SessionManager] Error writing session: ${err.message}`);
+    log(`[SessionManager] 写入会话时出错: ${err.message}`);
     return false;
   }
 }
@@ -347,7 +347,7 @@ function appendSessionContent(sessionPath, content) {
     fs.appendFileSync(sessionPath, content, 'utf8');
     return true;
   } catch (err) {
-    log(`[SessionManager] Error appending to session: ${err.message}`);
+    log(`[SessionManager] 追加到会话时出错: ${err.message}`);
     return false;
   }
 }
@@ -365,7 +365,7 @@ function deleteSession(sessionPath) {
     }
     return false;
   } catch (err) {
-    log(`[SessionManager] Error deleting session: ${err.message}`);
+    log(`[SessionManager] 删除会话时出错: ${err.message}`);
     return false;
   }
 }

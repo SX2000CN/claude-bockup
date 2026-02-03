@@ -61,18 +61,18 @@ async function main() {
 
   // Skip short sessions
   if (messageCount < minSessionLength) {
-    log(`[ContinuousLearning] Session too short (${messageCount} messages), skipping`);
+    log(`[持续学习] 会话太短 (${messageCount} 条消息)，跳过`);
     process.exit(0);
   }
 
   // Signal to Claude that session should be evaluated for extractable patterns
-  log(`[ContinuousLearning] Session has ${messageCount} messages - evaluate for extractable patterns`);
-  log(`[ContinuousLearning] Save learned skills to: ${learnedSkillsPath}`);
+  log(`[持续学习] 会话包含 ${messageCount} 条消息 - 正在评估可提取模式`);
+  log(`[持续学习] 保存学习到的技能至: ${learnedSkillsPath}`);
 
   process.exit(0);
 }
 
 main().catch(err => {
-  console.error('[ContinuousLearning] Error:', err.message);
+  console.error('[持续学习] 错误:', err.message);
   process.exit(0);
 });

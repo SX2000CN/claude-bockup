@@ -240,7 +240,7 @@ function getPackageManager(options = {}) {
  */
 function setPreferredPackageManager(pmName) {
   if (!PACKAGE_MANAGERS[pmName]) {
-    throw new Error(`Unknown package manager: ${pmName}`);
+    throw new Error(`未知的包管理器: ${pmName}`);
   }
 
   const config = loadConfig() || {};
@@ -256,7 +256,7 @@ function setPreferredPackageManager(pmName) {
  */
 function setProjectPackageManager(pmName, projectDir = process.cwd()) {
   if (!PACKAGE_MANAGERS[pmName]) {
-    throw new Error(`Unknown package manager: ${pmName}`);
+    throw new Error(`未知的包管理器: ${pmName}`);
   }
 
   const configDir = path.join(projectDir, '.claude');
@@ -311,17 +311,17 @@ function getSelectionPrompt() {
   const available = getAvailablePackageManagers();
   const current = getPackageManager();
 
-  let message = '[PackageManager] Available package managers:\n';
+  let message = '[PackageManager] 可用的包管理器:\n';
 
   for (const pmName of available) {
-    const indicator = pmName === current.name ? ' (current)' : '';
+    const indicator = pmName === current.name ? ' (当前)' : '';
     message += `  - ${pmName}${indicator}\n`;
   }
 
-  message += '\nTo set your preferred package manager:\n';
-  message += '  - Global: Set CLAUDE_PACKAGE_MANAGER environment variable\n';
-  message += '  - Or add to ~/.claude/package-manager.json: {"packageManager": "pnpm"}\n';
-  message += '  - Or add to package.json: {"packageManager": "pnpm@8"}\n';
+  message += '\n要设置您的首选包管理器:\n';
+  message += '  - 全局: 设置 CLAUDE_PACKAGE_MANAGER 环境变量\n';
+  message += '  - 或添加到 ~/.claude/package-manager.json: {"packageManager": "pnpm"}\n';
+  message += '  - 或添加到 package.json: {"packageManager": "pnpm@8"}\n';
 
   return message;
 }

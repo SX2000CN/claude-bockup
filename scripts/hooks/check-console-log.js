@@ -44,13 +44,13 @@ process.stdin.on('end', () => {
     for (const file of files) {
       const content = fs.readFileSync(file, 'utf8');
       if (content.includes('console.log')) {
-        console.error(`[Hook] WARNING: console.log found in ${file}`);
+        console.error(`[Hook] 警告: 在 ${file} 中发现 console.log`);
         hasConsole = true;
       }
     }
 
     if (hasConsole) {
-      console.error('[Hook] Remove console.log statements before committing');
+      console.error('[Hook] 提交前请移除 console.log 语句');
     }
   } catch (_error) {
     // Silently ignore errors (git might not be available, etc.)

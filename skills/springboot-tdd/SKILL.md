@@ -1,26 +1,26 @@
 ---
 name: springboot-tdd
-description: Test-driven development for Spring Boot using JUnit 5, Mockito, MockMvc, Testcontainers, and JaCoCo. Use when adding features, fixing bugs, or refactoring.
+description: 使用 JUnit 5, Mockito, MockMvc, Testcontainers 和 JaCoCo 进行 Spring Boot 测试驱动开发。在添加功能、修复错误或重构时使用。
 ---
 
-# Spring Boot TDD Workflow
+# Spring Boot TDD 工作流 (Spring Boot TDD Workflow)
 
-TDD guidance for Spring Boot services with 80%+ coverage (unit + integration).
+Spring Boot 服务的 TDD 指南，目标是 80% 以上的覆盖率（单元测试 + 集成测试）。
 
-## When to Use
+## 何时使用 (When to Use)
 
-- New features or endpoints
-- Bug fixes or refactors
-- Adding data access logic or security rules
+- 新功能或端点
+- 错误修复或重构
+- 添加数据访问逻辑或安全规则
 
-## Workflow
+## 工作流 (Workflow)
 
-1) Write tests first (they should fail)
-2) Implement minimal code to pass
-3) Refactor with tests green
-4) Enforce coverage (JaCoCo)
+1) 先写测试（它们应该失败）
+2) 实现通过测试所需的最小代码
+3) 在测试通过的情况下重构
+4) 强制执行覆盖率 (JaCoCo)
 
-## Unit Tests (JUnit 5 + Mockito)
+## 单元测试 (Unit Tests) (JUnit 5 + Mockito)
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -41,12 +41,12 @@ class MarketServiceTest {
 }
 ```
 
-Patterns:
-- Arrange-Act-Assert
-- Avoid partial mocks; prefer explicit stubbing
-- Use `@ParameterizedTest` for variants
+模式：
+- 安排-执行-断言 (Arrange-Act-Assert)
+- 避免部分模拟 (partial mocks)；优先使用显式存根 (stubbing)
+- 使用 `@ParameterizedTest` 进行变体测试
 
-## Web Layer Tests (MockMvc)
+## Web 层测试 (Web Layer Tests) (MockMvc)
 
 ```java
 @WebMvcTest(MarketController.class)
@@ -65,7 +65,7 @@ class MarketControllerTest {
 }
 ```
 
-## Integration Tests (SpringBootTest)
+## 集成测试 (Integration Tests) (SpringBootTest)
 
 ```java
 @SpringBootTest
@@ -86,7 +86,7 @@ class MarketIntegrationTest {
 }
 ```
 
-## Persistence Tests (DataJpaTest)
+## 持久化测试 (Persistence Tests) (DataJpaTest)
 
 ```java
 @DataJpaTest
@@ -109,12 +109,12 @@ class MarketRepositoryTest {
 
 ## Testcontainers
 
-- Use reusable containers for Postgres/Redis to mirror production
-- Wire via `@DynamicPropertySource` to inject JDBC URLs into Spring context
+- 使用可重用的容器（Postgres/Redis）来镜像生产环境
+- 通过 `@DynamicPropertySource` 注入 JDBC URL 到 Spring 上下文
 
-## Coverage (JaCoCo)
+## 覆盖率 (Coverage) (JaCoCo)
 
-Maven snippet:
+Maven 片段：
 ```xml
 <plugin>
   <groupId>org.jacoco</groupId>
@@ -133,13 +133,13 @@ Maven snippet:
 </plugin>
 ```
 
-## Assertions
+## 断言 (Assertions)
 
-- Prefer AssertJ (`assertThat`) for readability
-- For JSON responses, use `jsonPath`
-- For exceptions: `assertThatThrownBy(...)`
+- 优先使用 AssertJ (`assertThat`) 以提高可读性
+- 对于 JSON 响应，使用 `jsonPath`
+- 对于异常：`assertThatThrownBy(...)`
 
-## Test Data Builders
+## 测试数据构建器 (Test Data Builders)
 
 ```java
 class MarketBuilder {
@@ -149,9 +149,9 @@ class MarketBuilder {
 }
 ```
 
-## CI Commands
+## CI 命令 (CI Commands)
 
-- Maven: `mvn -T 4 test` or `mvn verify`
+- Maven: `mvn -T 4 test` 或 `mvn verify`
 - Gradle: `./gradlew test jacocoTestReport`
 
-**Remember**: Keep tests fast, isolated, and deterministic. Test behavior, not implementation details.
+**记住**: 保持测试快速、隔离和确定性。测试行为，而不是实现细节。

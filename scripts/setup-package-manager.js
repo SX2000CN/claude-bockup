@@ -24,35 +24,35 @@ const {
 
 function showHelp() {
   console.log(`
-Package Manager Setup for Claude Code
+Claude Code 包管理器设置 (Package Manager Setup)
 
-Usage:
+用法:
   node scripts/setup-package-manager.js [options] [package-manager]
 
-Options:
-  --detect        Detect and show current package manager
-  --global <pm>   Set global preference (saves to ~/.claude/package-manager.json)
-  --project <pm>  Set project preference (saves to .claude/package-manager.json)
-  --list          List available package managers
-  --help          Show this help message
+选项:
+  --detect        检测并显示当前包管理器
+  --global <pm>   设置全局偏好 (保存到 ~/.claude/package-manager.json)
+  --project <pm>  设置项目偏好 (保存到 .claude/package-manager.json)
+  --list          列出可用的包管理器
+  --help          显示此帮助信息
 
-Package Managers:
-  npm             Node Package Manager (default with Node.js)
-  pnpm            Fast, disk space efficient package manager
-  yarn            Classic Yarn package manager
-  bun             All-in-one JavaScript runtime & toolkit
+包管理器:
+  npm             Node 包管理器 (Node.js 默认)
+  pnpm            快速、节省磁盘空间的包管理器
+  yarn            经典的 Yarn 包管理器
+  bun             多合一 JavaScript 运行时和工具包
 
-Examples:
-  # Detect current package manager
+示例:
+  # 检测当前包管理器
   node scripts/setup-package-manager.js --detect
 
-  # Set pnpm as global preference
+  # 将 pnpm 设置为全局偏好
   node scripts/setup-package-manager.js --global pnpm
 
-  # Set bun for current project
+  # 为当前项目设置 bun
   node scripts/setup-package-manager.js --project bun
 
-  # List available package managers
+  # 列出可用的包管理器
   node scripts/setup-package-manager.js --list
 `);
 }
@@ -63,32 +63,32 @@ function detectAndShow() {
   const fromLock = detectFromLockFile();
   const fromPkg = detectFromPackageJson();
 
-  console.log('\n=== Package Manager Detection ===\n');
+  console.log('\n=== 包管理器检测 (Package Manager Detection) ===\n');
 
-  console.log('Current selection:');
-  console.log(`  Package Manager: ${pm.name}`);
-  console.log(`  Source: ${pm.source}`);
+  console.log('当前选择:');
+  console.log(`  包管理器: ${pm.name}`);
+  console.log(`  来源: ${pm.source}`);
   console.log('');
 
-  console.log('Detection results:');
-  console.log(`  From package.json: ${fromPkg || 'not specified'}`);
-  console.log(`  From lock file: ${fromLock || 'not found'}`);
-  console.log(`  Environment var: ${process.env.CLAUDE_PACKAGE_MANAGER || 'not set'}`);
+  console.log('检测结果:');
+  console.log(`  来自 package.json: ${fromPkg || '未指定'}`);
+  console.log(`  来自锁文件: ${fromLock || '未找到'}`);
+  console.log(`  环境变量: ${process.env.CLAUDE_PACKAGE_MANAGER || '未设置'}`);
   console.log('');
 
-  console.log('Available package managers:');
+  console.log('可用包管理器:');
   for (const pmName of Object.keys(PACKAGE_MANAGERS)) {
     const installed = available.includes(pmName);
     const indicator = installed ? '✓' : '✗';
-    const current = pmName === pm.name ? ' (current)' : '';
+    const current = pmName === pm.name ? ' (当前)' : '';
     console.log(`  ${indicator} ${pmName}${current}`);
   }
 
   console.log('');
-  console.log('Commands:');
-  console.log(`  Install: ${pm.config.installCmd}`);
-  console.log(`  Run script: ${pm.config.runCmd} [script-name]`);
-  console.log(`  Execute binary: ${pm.config.execCmd} [binary-name]`);
+  console.log('命令:');
+  console.log(`  安装: ${pm.config.installCmd}`);
+  console.log(`  运行脚本: ${pm.config.runCmd} [script-name]`);
+  console.log(`  执行二进制: ${pm.config.execCmd} [binary-name]`);
   console.log('');
 }
 
@@ -96,59 +96,59 @@ function listAvailable() {
   const available = getAvailablePackageManagers();
   const pm = getPackageManager();
 
-  console.log('\nAvailable Package Managers:\n');
+  console.log('\n可用包管理器:\n');
 
   for (const pmName of Object.keys(PACKAGE_MANAGERS)) {
     const config = PACKAGE_MANAGERS[pmName];
     const installed = available.includes(pmName);
-    const current = pmName === pm.name ? ' (current)' : '';
+    const current = pmName === pm.name ? ' (当前)' : '';
 
     console.log(`${pmName}${current}`);
-    console.log(`  Installed: ${installed ? 'Yes' : 'No'}`);
-    console.log(`  Lock file: ${config.lockFile}`);
-    console.log(`  Install: ${config.installCmd}`);
-    console.log(`  Run: ${config.runCmd}`);
+    console.log(`  已安装: ${installed ? '是' : '否'}`);
+    console.log(`  锁文件: ${config.lockFile}`);
+    console.log(`  安装命令: ${config.installCmd}`);
+    console.log(`  运行命令: ${config.runCmd}`);
     console.log('');
   }
 }
 
 function setGlobal(pmName) {
   if (!PACKAGE_MANAGERS[pmName]) {
-    console.error(`Error: Unknown package manager "${pmName}"`);
-    console.error(`Available: ${Object.keys(PACKAGE_MANAGERS).join(', ')}`);
+    console.error(`错误: 未知的包管理器 "${pmName}"`);
+    console.error(`可用选项: ${Object.keys(PACKAGE_MANAGERS).join(', ')}`);
     process.exit(1);
   }
 
   const available = getAvailablePackageManagers();
   if (!available.includes(pmName)) {
-    console.warn(`Warning: ${pmName} is not installed on your system`);
+    console.warn(`警告: ${pmName} 尚未安装在您的系统上`);
   }
 
   try {
     setPreferredPackageManager(pmName);
-    console.log(`\n✓ Global preference set to: ${pmName}`);
-    console.log('  Saved to: ~/.claude/package-manager.json');
+    console.log(`\n✓ 全局偏好已设置为: ${pmName}`);
+    console.log('  已保存到: ~/.claude/package-manager.json');
     console.log('');
   } catch (err) {
-    console.error(`Error: ${err.message}`);
+    console.error(`错误: ${err.message}`);
     process.exit(1);
   }
 }
 
 function setProject(pmName) {
   if (!PACKAGE_MANAGERS[pmName]) {
-    console.error(`Error: Unknown package manager "${pmName}"`);
-    console.error(`Available: ${Object.keys(PACKAGE_MANAGERS).join(', ')}`);
+    console.error(`错误: 未知的包管理器 "${pmName}"`);
+    console.error(`可用选项: ${Object.keys(PACKAGE_MANAGERS).join(', ')}`);
     process.exit(1);
   }
 
   try {
     setProjectPackageManager(pmName);
-    console.log(`\n✓ Project preference set to: ${pmName}`);
-    console.log('  Saved to: .claude/package-manager.json');
+    console.log(`\n✓ 项目偏好已设置为: ${pmName}`);
+    console.log('  已保存到: .claude/package-manager.json');
     console.log('');
   } catch (err) {
-    console.error(`Error: ${err.message}`);
+    console.error(`错误: ${err.message}`);
     process.exit(1);
   }
 }
@@ -175,7 +175,7 @@ const globalIdx = args.indexOf('--global');
 if (globalIdx !== -1) {
   const pmName = args[globalIdx + 1];
   if (!pmName) {
-    console.error('Error: --global requires a package manager name');
+    console.error('错误: --global 需要指定包管理器名称');
     process.exit(1);
   }
   setGlobal(pmName);
@@ -186,7 +186,7 @@ const projectIdx = args.indexOf('--project');
 if (projectIdx !== -1) {
   const pmName = args[projectIdx + 1];
   if (!pmName) {
-    console.error('Error: --project requires a package manager name');
+    console.error('错误: --project 需要指定包管理器名称');
     process.exit(1);
   }
   setProject(pmName);
@@ -198,7 +198,7 @@ const pmName = args[0];
 if (PACKAGE_MANAGERS[pmName]) {
   setGlobal(pmName);
 } else {
-  console.error(`Error: Unknown option or package manager "${pmName}"`);
+  console.error(`错误: 未知选项或包管理器 "${pmName}"`);
   showHelp();
   process.exit(1);
 }

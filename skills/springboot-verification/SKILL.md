@@ -1,80 +1,80 @@
 ---
 name: springboot-verification
-description: Verification loop for Spring Boot projects: build, static analysis, tests with coverage, security scans, and diff review before release or PR.
+description: Spring Boot 项目的验证循环：构建、静态分析、带覆盖率的测试、安全扫描和发布或 PR 前的差异审查。
 ---
 
-# Spring Boot Verification Loop
+# Spring Boot 验证循环 (Spring Boot Verification Loop)
 
-Run before PRs, after major changes, and pre-deploy.
+在 PR 之前、重大更改之后和部署之前运行。
 
-## Phase 1: Build
+## 第 1 阶段：构建 (Phase 1: Build)
 
 ```bash
 mvn -T 4 clean verify -DskipTests
-# or
+# 或者
 ./gradlew clean assemble -x test
 ```
 
-If build fails, stop and fix.
+如果构建失败，停止并修复。
 
-## Phase 2: Static Analysis
+## 第 2 阶段：静态分析 (Phase 2: Static Analysis)
 
-Maven (common plugins):
+Maven (常用插件):
 ```bash
 mvn -T 4 spotbugs:check pmd:check checkstyle:check
 ```
 
-Gradle (if configured):
+Gradle (如果已配置):
 ```bash
 ./gradlew checkstyleMain pmdMain spotbugsMain
 ```
 
-## Phase 3: Tests + Coverage
+## 第 3 阶段：测试 + 覆盖率 (Phase 3: Tests + Coverage)
 
 ```bash
 mvn -T 4 test
-mvn jacoco:report   # verify 80%+ coverage
-# or
+mvn jacoco:report   # 验证 80%+ 覆盖率
+# 或者
 ./gradlew test jacocoTestReport
 ```
 
-Report:
-- Total tests, passed/failed
-- Coverage % (lines/branches)
+报告:
+- 总测试数，通过/失败
+- 覆盖率 % (行/分支)
 
-## Phase 4: Security Scan
+## 第 4 阶段：安全扫描 (Phase 4: Security Scan)
 
 ```bash
-# Dependency CVEs
+# 依赖项 CVEs
 mvn org.owasp:dependency-check-maven:check
-# or
+# 或者
 ./gradlew dependencyCheckAnalyze
 
-# Secrets (git)
-git secrets --scan  # if configured
+# 密钥 (git)
+git secrets --scan  # 如果已配置
 ```
 
-## Phase 5: Lint/Format (optional gate)
+## 第 5 阶段：Lint/格式化 (可选门禁) (Phase 5: Lint/Format)
 
 ```bash
-mvn spotless:apply   # if using Spotless plugin
+mvn spotless:apply   # 如果使用 Spotless 插件
 ./gradlew spotlessApply
 ```
 
-## Phase 6: Diff Review
+## 第 6 阶段：差异审查 (Phase 6: Diff Review)
 
 ```bash
 git diff --stat
 git diff
 ```
 
-Checklist:
-- No debugging logs left (`System.out`, `log.debug` without guards)
-- Meaningful errors and HTTP statuses
-- Transactions and validation present where needed
-- Config changes documented
+检查清单:
+- 没有遗留的调试日志 (`System.out`, 无保护的 `log.debug`)
+- 有意义的错误和 HTTP 状态
+- 需要的地方有事务和验证
+- 配置更改已记录
 
-## Output Template
+## 输出模板 (Output Template)
 
 ```
 VERIFICATION REPORT
@@ -92,9 +92,9 @@ Issues to Fix:
 2. ...
 ```
 
-## Continuous Mode
+## 持续模式 (Continuous Mode)
 
-- Re-run phases on significant changes or every 30–60 minutes in long sessions
-- Keep a short loop: `mvn -T 4 test` + spotbugs for quick feedback
+- 在重大更改或长时间会话中每 30–60 分钟重新运行各阶段
+- 保持短循环：`mvn -T 4 test` + spotbugs 以获得快速反馈
 
-**Remember**: Fast feedback beats late surprises. Keep the gate strict—treat warnings as defects in production systems.
+**记住**: 快速反馈胜过迟来的惊喜。保持门禁严格——将警告视为生产系统中的缺陷。

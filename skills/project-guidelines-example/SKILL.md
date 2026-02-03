@@ -1,43 +1,43 @@
-# Project Guidelines Skill (Example)
+# 项目指南技能 (示例) (Project Guidelines Skill (Example))
 
-This is an example of a project-specific skill. Use this as a template for your own projects.
+这是一个特定于项目的技能示例。将其用作您自己项目的模板。
 
-Based on a real production application: [Zenith](https://zenith.chat) - AI-powered customer discovery platform.
-
----
-
-## When to Use
-
-Reference this skill when working on the specific project it's designed for. Project skills contain:
-- Architecture overview
-- File structure
-- Code patterns
-- Testing requirements
-- Deployment workflow
+基于真实的生产应用程序：[Zenith](https://zenith.chat) - AI 驱动的客户发现平台。
 
 ---
 
-## Architecture Overview
+## 何时使用 (When to Use)
 
-**Tech Stack:**
-- **Frontend**: Next.js 15 (App Router), TypeScript, React
-- **Backend**: FastAPI (Python), Pydantic models
-- **Database**: Supabase (PostgreSQL)
-- **AI**: Claude API with tool calling and structured output
-- **Deployment**: Google Cloud Run
-- **Testing**: Playwright (E2E), pytest (backend), React Testing Library
+在处理其设计的特定项目时引用此技能。项目技能包含：
+- 架构概述
+- 文件结构
+- 代码模式
+- 测试要求
+- 部署工作流
 
-**Services:**
+---
+
+## 架构概述 (Architecture Overview)
+
+**技术栈:**
+- **前端**: Next.js 15 (App Router), TypeScript, React
+- **后端**: FastAPI (Python), Pydantic models
+- **数据库**: Supabase (PostgreSQL)
+- **AI**: Claude API，带有工具调用和结构化输出
+- **部署**: Google Cloud Run
+- **测试**: Playwright (E2E), pytest (后端), React Testing Library
+
+**服务:**
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                         Frontend                            │
+│                         前端 (Frontend)                      │
 │  Next.js 15 + TypeScript + TailwindCSS                     │
 │  Deployed: Vercel / Cloud Run                              │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                         Backend                             │
+│                         后端 (Backend)                       │
 │  FastAPI + Python 3.11 + Pydantic                          │
 │  Deployed: Cloud Run                                       │
 └─────────────────────────────────────────────────────────────┘
@@ -46,13 +46,13 @@ Reference this skill when working on the specific project it's designed for. Pro
               ▼               ▼               ▼
         ┌──────────┐   ┌──────────┐   ┌──────────┐
         │ Supabase │   │  Claude  │   │  Redis   │
-        │ Database │   │   API    │   │  Cache   │
+        │ 数据库    │   │   API    │   │  缓存     │
         └──────────┘   └──────────┘   └──────────┘
 ```
 
 ---
 
-## File Structure
+## 文件结构 (File Structure)
 
 ```
 project/
@@ -87,9 +87,9 @@ project/
 
 ---
 
-## Code Patterns
+## 代码模式 (Code Patterns)
 
-### API Response Format (FastAPI)
+### API 响应格式 (FastAPI) (API Response Format)
 
 ```python
 from pydantic import BaseModel
@@ -111,7 +111,7 @@ class ApiResponse(BaseModel, Generic[T]):
         return cls(success=False, error=error)
 ```
 
-### Frontend API Calls (TypeScript)
+### 前端 API 调用 (TypeScript) (Frontend API Calls)
 
 ```typescript
 interface ApiResponse<T> {
@@ -144,7 +144,7 @@ async function fetchApi<T>(
 }
 ```
 
-### Claude AI Integration (Structured Output)
+### Claude AI 集成 (结构化输出) (Claude AI Integration)
 
 ```python
 from anthropic import Anthropic
@@ -179,7 +179,7 @@ async def analyze_with_claude(content: str) -> AnalysisResult:
     return AnalysisResult(**tool_use.input)
 ```
 
-### Custom Hooks (React)
+### 自定义 Hooks (React) (Custom Hooks)
 
 ```typescript
 import { useState, useCallback } from 'react'
@@ -217,22 +217,22 @@ export function useApi<T>(
 
 ---
 
-## Testing Requirements
+## 测试要求 (Testing Requirements)
 
-### Backend (pytest)
+### 后端 (pytest) (Backend)
 
 ```bash
-# Run all tests
+# 运行所有测试
 poetry run pytest tests/
 
-# Run with coverage
+# 运行带有覆盖率的测试
 poetry run pytest tests/ --cov=. --cov-report=html
 
-# Run specific test file
+# 运行特定测试文件
 poetry run pytest tests/test_auth.py -v
 ```
 
-**Test structure:**
+**测试结构:**
 ```python
 import pytest
 from httpx import AsyncClient
@@ -250,20 +250,20 @@ async def test_health_check(client: AsyncClient):
     assert response.json()["status"] == "healthy"
 ```
 
-### Frontend (React Testing Library)
+### 前端 (React Testing Library) (Frontend)
 
 ```bash
-# Run tests
+# 运行测试
 npm run test
 
-# Run with coverage
+# 运行带有覆盖率的测试
 npm run test -- --coverage
 
-# Run E2E tests
+# 运行 E2E 测试
 npm run test:e2e
 ```
 
-**Test structure:**
+**测试结构:**
 ```typescript
 import { render, screen, fireEvent } from '@testing-library/react'
 import { WorkspacePanel } from './WorkspacePanel'
@@ -284,30 +284,30 @@ describe('WorkspacePanel', () => {
 
 ---
 
-## Deployment Workflow
+## 部署工作流 (Deployment Workflow)
 
-### Pre-Deployment Checklist
+### 部署前检查清单 (Pre-Deployment Checklist)
 
-- [ ] All tests passing locally
-- [ ] `npm run build` succeeds (frontend)
-- [ ] `poetry run pytest` passes (backend)
-- [ ] No hardcoded secrets
-- [ ] Environment variables documented
-- [ ] Database migrations ready
+- [ ] 所有测试在本地通过
+- [ ] `npm run build` 成功 (前端)
+- [ ] `poetry run pytest` 通过 (后端)
+- [ ] 无硬编码密钥
+- [ ] 环境变量已记录
+- [ ] 数据库迁移已准备就绪
 
-### Deployment Commands
+### 部署命令 (Deployment Commands)
 
 ```bash
-# Build and deploy frontend
+# 构建并部署前端
 cd frontend && npm run build
 gcloud run deploy frontend --source .
 
-# Build and deploy backend
+# 构建并部署后端
 cd backend
 gcloud run deploy backend --source .
 ```
 
-### Environment Variables
+### 环境变量 (Environment Variables)
 
 ```bash
 # Frontend (.env.local)
@@ -324,22 +324,22 @@ SUPABASE_KEY=eyJ...
 
 ---
 
-## Critical Rules
+## 关键规则 (Critical Rules)
 
-1. **No emojis** in code, comments, or documentation
-2. **Immutability** - never mutate objects or arrays
-3. **TDD** - write tests before implementation
-4. **80% coverage** minimum
-5. **Many small files** - 200-400 lines typical, 800 max
-6. **No console.log** in production code
-7. **Proper error handling** with try/catch
-8. **Input validation** with Pydantic/Zod
+1. **禁止 Emoji**：在代码、注释或文档中（除非明确要求）
+2. **不可变性**：永远不要突变对象或数组
+3. **TDD**：在实现之前编写测试
+4. **80% 覆盖率**：最低要求
+5. **许多小文件**：典型 200-400 行，最多 800 行
+6. **无 console.log**：在生产代码中
+7. **正确的错误处理**：使用 try/catch
+8. **输入验证**：使用 Pydantic/Zod
 
 ---
 
-## Related Skills
+## 相关技能 (Related Skills)
 
-- `coding-standards.md` - General coding best practices
-- `backend-patterns.md` - API and database patterns
-- `frontend-patterns.md` - React and Next.js patterns
-- `tdd-workflow/` - Test-driven development methodology
+- `coding-standards.md` - 通用编码最佳实践
+- `backend-patterns.md` - API 和数据库模式
+- `frontend-patterns.md` - React 和 Next.js 模式
+- `tdd-workflow/` - 测试驱动开发方法论

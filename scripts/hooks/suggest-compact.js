@@ -42,18 +42,18 @@ async function main() {
 
   // Suggest compact after threshold tool calls
   if (count === threshold) {
-    log(`[StrategicCompact] ${threshold} tool calls reached - consider /compact if transitioning phases`);
+    log(`[策略性压缩] 已达到 ${threshold} 次工具调用 - 如果正在转换阶段，请考虑使用 /compact`);
   }
 
   // Suggest at regular intervals after threshold
   if (count > threshold && count % 25 === 0) {
-    log(`[StrategicCompact] ${count} tool calls - good checkpoint for /compact if context is stale`);
+    log(`[策略性压缩] ${count} 次工具调用 - 如果上下文已过时，这是使用 /compact 的好时机`);
   }
 
   process.exit(0);
 }
 
 main().catch(err => {
-  console.error('[StrategicCompact] Error:', err.message);
+  console.error('[策略性压缩] 错误:', err.message);
   process.exit(0);
 });

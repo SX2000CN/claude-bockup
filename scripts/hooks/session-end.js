@@ -41,44 +41,44 @@ async function main() {
     );
 
     if (success) {
-      log(`[SessionEnd] Updated session file: ${sessionFile}`);
+      log(`[会话结束] 已更新会话文件: ${sessionFile}`);
     }
   } else {
     // Create new session file with template
-    const template = `# Session: ${today}
-**Date:** ${today}
-**Started:** ${currentTime}
-**Last Updated:** ${currentTime}
+    const template = `# 会话: ${today}
+**日期:** ${today}
+**开始时间:** ${currentTime}
+**最后更新:** ${currentTime}
 
 ---
 
-## Current State
+## 当前状态
 
-[Session context goes here]
+[此处填写会话上下文]
 
-### Completed
+### 已完成
 - [ ]
 
-### In Progress
+### 进行中
 - [ ]
 
-### Notes for Next Session
+### 下次会话备注
 -
 
-### Context to Load
+### 需要加载的上下文
 \`\`\`
-[relevant files]
+[相关文件]
 \`\`\`
 `;
 
     writeFile(sessionFile, template);
-    log(`[SessionEnd] Created session file: ${sessionFile}`);
+    log(`[会话结束] 已创建会话文件: ${sessionFile}`);
   }
 
   process.exit(0);
 }
 
 main().catch(err => {
-  console.error('[SessionEnd] Error:', err.message);
+  console.error('[会话结束] 错误:', err.message);
   process.exit(0);
 });

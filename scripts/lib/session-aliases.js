@@ -57,7 +57,7 @@ function loadAliases() {
 
     // Validate structure
     if (!data.aliases || typeof data.aliases !== 'object') {
-      log('[Aliases] Invalid aliases file structure, resetting');
+      log('[Aliases] 别名文件结构无效，正在重置');
       return getDefaultAliases();
     }
 
@@ -76,7 +76,7 @@ function loadAliases() {
 
     return data;
   } catch (err) {
-    log(`[Aliases] Error parsing aliases file: ${err.message}`);
+    log(`[Aliases] 解析别名文件时出错: ${err.message}`);
     return getDefaultAliases();
   }
 }
@@ -124,15 +124,15 @@ function saveAliases(aliases) {
 
     return true;
   } catch (err) {
-    log(`[Aliases] Error saving aliases: ${err.message}`);
+    log(`[Aliases] 保存别名时出错: ${err.message}`);
 
     // Restore from backup if exists
     if (fs.existsSync(backupPath)) {
       try {
         fs.copyFileSync(backupPath, aliasesPath);
-        log('[Aliases] Restored from backup');
+        log('[Aliases] 已从备份恢复');
       } catch (restoreErr) {
-        log(`[Aliases] Failed to restore backup: ${restoreErr.message}`);
+        log(`[Aliases] 无法恢复备份: ${restoreErr.message}`);
       }
     }
 
@@ -181,17 +181,17 @@ function resolveAlias(alias) {
 function setAlias(alias, sessionPath, title = null) {
   // Validate alias name
   if (!alias || alias.length === 0) {
-    return { success: false, error: 'Alias name cannot be empty' };
+    return { success: false, error: '别名不能为空' };
   }
 
   if (!/^[a-zA-Z0-9_-]+$/.test(alias)) {
-    return { success: false, error: 'Alias name must contain only letters, numbers, dashes, and underscores' };
+    return { success: false, error: '别名只能包含字母、数字、连字符和下划线' };
   }
 
   // Reserved alias names
   const reserved = ['list', 'help', 'remove', 'delete', 'create', 'set'];
   if (reserved.includes(alias.toLowerCase())) {
-    return { success: false, error: `'${alias}' is a reserved alias name` };
+    return { success: false, error: `'${alias}' 是保留的别名名称` };
   }
 
   const data = loadAliases();
@@ -215,7 +215,7 @@ function setAlias(alias, sessionPath, title = null) {
     };
   }
 
-  return { success: false, error: 'Failed to save alias' };
+  return { success: false, error: '保存别名失败' };
 }
 
 /**
@@ -266,7 +266,7 @@ function deleteAlias(alias) {
   const data = loadAliases();
 
   if (!data.aliases[alias]) {
-    return { success: false, error: `Alias '${alias}' not found` };
+    return { success: false, error: `未找到别名 '${alias}'` };
   }
 
   const deleted = data.aliases[alias];
@@ -280,7 +280,7 @@ function deleteAlias(alias) {
     };
   }
 
-  return { success: false, error: 'Failed to delete alias' };
+  return { success: false, error: '删除别名失败' };
 }
 
 /**
@@ -293,16 +293,16 @@ function renameAlias(oldAlias, newAlias) {
   const data = loadAliases();
 
   if (!data.aliases[oldAlias]) {
-    return { success: false, error: `Alias '${oldAlias}' not found` };
+    return { success: false, error: `未找到别名 '${oldAlias}'` };
   }
 
   if (data.aliases[newAlias]) {
-    return { success: false, error: `Alias '${newAlias}' already exists` };
+    return { success: false, error: `别名 '${newAlias}' 已存在` };
   }
 
   // Validate new alias name
   if (!/^[a-zA-Z0-9_-]+$/.test(newAlias)) {
-    return { success: false, error: 'New alias name must contain only letters, numbers, dashes, and underscores' };
+    return { success: false, error: '新别名只能包含字母、数字、连字符和下划线' };
   }
 
   const aliasData = data.aliases[oldAlias];
@@ -322,7 +322,7 @@ function renameAlias(oldAlias, newAlias) {
 
   // Restore old alias on failure
   data.aliases[oldAlias] = aliasData;
-  return { success: false, error: 'Failed to rename alias' };
+  return { success: false, error: '重命名别名失败' };
 }
 
 /**
@@ -351,7 +351,7 @@ function updateAliasTitle(alias, title) {
   const data = loadAliases();
 
   if (!data.aliases[alias]) {
-    return { success: false, error: `Alias '${alias}' not found` };
+    return { success: false, error: `未找到别名 '${alias}'` };
   }
 
   data.aliases[alias].title = title;
@@ -365,7 +365,7 @@ function updateAliasTitle(alias, title) {
     };
   }
 
-  return { success: false, error: 'Failed to update alias title' };
+  return { success: false, error: '更新别名标题失败' };
 }
 
 /**

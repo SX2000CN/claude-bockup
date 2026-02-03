@@ -31,7 +31,7 @@ function extractFrontmatter(content) {
 
 function validateAgents() {
   if (!fs.existsSync(AGENTS_DIR)) {
-    console.log('No agents directory found, skipping validation');
+    console.log('未找到 agents 目录，跳过验证');
     process.exit(0);
   }
 
@@ -44,14 +44,14 @@ function validateAgents() {
     const frontmatter = extractFrontmatter(content);
 
     if (!frontmatter) {
-      console.error(`ERROR: ${file} - Missing frontmatter`);
+      console.error(`错误: ${file} - 缺少 frontmatter`);
       hasErrors = true;
       continue;
     }
 
     for (const field of REQUIRED_FIELDS) {
       if (!frontmatter[field]) {
-        console.error(`ERROR: ${file} - Missing required field: ${field}`);
+        console.error(`错误: ${file} - 缺少必填字段: ${field}`);
         hasErrors = true;
       }
     }
@@ -61,7 +61,7 @@ function validateAgents() {
     process.exit(1);
   }
 
-  console.log(`Validated ${files.length} agent files`);
+  console.log(`已验证 ${files.length} 个代理文件`);
 }
 
 validateAgents();

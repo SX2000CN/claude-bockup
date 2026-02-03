@@ -1,43 +1,43 @@
 ---
 name: python-patterns
-description: Pythonic idioms, PEP 8 standards, type hints, and best practices for building robust, efficient, and maintainable Python applications.
+description: 构建健壮、高效且可维护的 Python 应用程序的 Python 习惯用法、PEP 8 标准、类型提示和最佳实践。
 ---
 
-# Python Development Patterns
+# Python 开发模式 (Python Development Patterns)
 
-Idiomatic Python patterns and best practices for building robust, efficient, and maintainable applications.
+构建健壮、高效且可维护应用程序的 Python 惯用模式和最佳实践。
 
-## When to Activate
+## 何时激活 (When to Activate)
 
-- Writing new Python code
-- Reviewing Python code
-- Refactoring existing Python code
-- Designing Python packages/modules
+- 编写新的 Python 代码
+- 审查 Python 代码
+- 重构现有的 Python 代码
+- 设计 Python 包/模块
 
-## Core Principles
+## 核心原则 (Core Principles)
 
-### 1. Readability Counts
+### 1. 可读性至上 (Readability Counts)
 
-Python prioritizes readability. Code should be obvious and easy to understand.
+Python 优先考虑可读性。代码应该是显而易见且易于理解的。
 
 ```python
-# Good: Clear and readable
+# Good: 清晰可读
 def get_active_users(users: list[User]) -> list[User]:
     """Return only active users from the provided list."""
     return [user for user in users if user.is_active]
 
 
-# Bad: Clever but confusing
+# Bad: 聪明但令人困惑
 def get_active_users(u):
     return [x for x in u if x.a]
 ```
 
-### 2. Explicit is Better Than Implicit
+### 2. 显式优于隐式 (Explicit is Better Than Implicit)
 
-Avoid magic; be clear about what your code does.
+避免魔法；明确你的代码在做什么。
 
 ```python
-# Good: Explicit configuration
+# Good: 显式配置
 import logging
 
 logging.basicConfig(
@@ -45,24 +45,24 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 
-# Bad: Hidden side effects
+# Bad: 隐藏的副作用
 import some_module
-some_module.setup()  # What does this do?
+some_module.setup()  # 这到底是做什么的？
 ```
 
-### 3. EAFP - Easier to Ask Forgiveness Than Permission
+### 3. EAFP - 请求宽恕比许可更容易 (Easier to Ask Forgiveness Than Permission)
 
-Python prefers exception handling over checking conditions.
+Python 倾向于使用异常处理而不是检查条件。
 
 ```python
-# Good: EAFP style
+# Good: EAFP 风格
 def get_value(dictionary: dict, key: str) -> Any:
     try:
         return dictionary[key]
     except KeyError:
         return default_value
 
-# Bad: LBYL (Look Before You Leap) style
+# Bad: LBYL (三思而后行) 风格
 def get_value(dictionary: dict, key: str) -> Any:
     if key in dictionary:
         return dictionary[key]
@@ -70,9 +70,9 @@ def get_value(dictionary: dict, key: str) -> Any:
         return default_value
 ```
 
-## Type Hints
+## 类型提示 (Type Hints)
 
-### Basic Type Annotations
+### 基本类型注解
 
 ```python
 from typing import Optional, List, Dict, Any
@@ -88,32 +88,32 @@ def process_user(
     return User(user_id, data)
 ```
 
-### Modern Type Hints (Python 3.9+)
+### 现代类型提示 (Python 3.9+)
 
 ```python
-# Python 3.9+ - Use built-in types
+# Python 3.9+ - 使用内置类型
 def process_items(items: list[str]) -> dict[str, int]:
     return {item: len(item) for item in items}
 
-# Python 3.8 and earlier - Use typing module
+# Python 3.8 及更早版本 - 使用 typing 模块
 from typing import List, Dict
 
 def process_items(items: List[str]) -> Dict[str, int]:
     return {item: len(item) for item in items}
 ```
 
-### Type Aliases and TypeVar
+### 类型别名和 TypeVar
 
 ```python
 from typing import TypeVar, Union
 
-# Type alias for complex types
+# 复杂类型的类型别名
 JSON = Union[dict[str, Any], list[Any], str, int, float, bool, None]
 
 def parse_json(data: str) -> JSON:
     return json.loads(data)
 
-# Generic types
+# 泛型
 T = TypeVar('T')
 
 def first(items: list[T]) -> T | None:
@@ -121,7 +121,7 @@ def first(items: list[T]) -> T | None:
     return items[0] if items else None
 ```
 
-### Protocol-Based Duck Typing
+### 基于协议的鸭子类型 (Protocol-Based Duck Typing)
 
 ```python
 from typing import Protocol
@@ -135,12 +135,12 @@ def render_all(items: list[Renderable]) -> str:
     return "\n".join(item.render() for item in items)
 ```
 
-## Error Handling Patterns
+## 错误处理模式 (Error Handling Patterns)
 
-### Specific Exception Handling
+### 特定异常处理
 
 ```python
-# Good: Catch specific exceptions
+# Good: 捕获特定异常
 def load_config(path: str) -> Config:
     try:
         with open(path) as f:
@@ -150,27 +150,27 @@ def load_config(path: str) -> Config:
     except json.JSONDecodeError as e:
         raise ConfigError(f"Invalid JSON in config: {path}") from e
 
-# Bad: Bare except
+# Bad: 裸 except
 def load_config(path: str) -> Config:
     try:
         with open(path) as f:
             return Config.from_json(f.read())
     except:
-        return None  # Silent failure!
+        return None  # 沉默的失败！
 ```
 
-### Exception Chaining
+### 异常链
 
 ```python
 def process_data(data: str) -> Result:
     try:
         parsed = json.loads(data)
     except json.JSONDecodeError as e:
-        # Chain exceptions to preserve the traceback
+        # 链接异常以保留追溯信息
         raise ValueError(f"Failed to parse data: {data}") from e
 ```
 
-### Custom Exception Hierarchy
+### 自定义异常层次结构
 
 ```python
 class AppError(Exception):
@@ -193,17 +193,17 @@ def get_user(user_id: str) -> User:
     return user
 ```
 
-## Context Managers
+## 上下文管理器 (Context Managers)
 
-### Resource Management
+### 资源管理
 
 ```python
-# Good: Using context managers
+# Good: 使用上下文管理器
 def process_file(path: str) -> str:
     with open(path, 'r') as f:
         return f.read()
 
-# Bad: Manual resource management
+# Bad: 手动资源管理
 def process_file(path: str) -> str:
     f = open(path, 'r')
     try:
@@ -212,7 +212,7 @@ def process_file(path: str) -> str:
         f.close()
 ```
 
-### Custom Context Managers
+### 自定义上下文管理器
 
 ```python
 from contextlib import contextmanager
@@ -230,7 +230,7 @@ with timer("data processing"):
     process_large_dataset()
 ```
 
-### Context Manager Classes
+### 上下文管理器类
 
 ```python
 class DatabaseTransaction:
@@ -254,25 +254,25 @@ with DatabaseTransaction(conn):
     conn.create_profile(user.id, profile_data)
 ```
 
-## Comprehensions and Generators
+## 推导式和生成器 (Comprehensions and Generators)
 
-### List Comprehensions
+### 列表推导式 (List Comprehensions)
 
 ```python
-# Good: List comprehension for simple transformations
+# Good: 用于简单转换的列表推导式
 names = [user.name for user in users if user.is_active]
 
-# Bad: Manual loop
+# Bad: 手动循环
 names = []
 for user in users:
     if user.is_active:
         names.append(user.name)
 
-# Complex comprehensions should be expanded
-# Bad: Too complex
+# 复杂的推导式应该展开
+# Bad: 太复杂
 result = [x * 2 for x in items if x > 0 if x % 2 == 0]
 
-# Good: Use a generator function
+# Good: 使用生成器函数
 def filter_and_transform(items: Iterable[int]) -> list[int]:
     result = []
     for x in items:
@@ -281,17 +281,17 @@ def filter_and_transform(items: Iterable[int]) -> list[int]:
     return result
 ```
 
-### Generator Expressions
+### 生成器表达式 (Generator Expressions)
 
 ```python
-# Good: Generator for lazy evaluation
+# Good: 用于惰性求值的生成器
 total = sum(x * x for x in range(1_000_000))
 
-# Bad: Creates large intermediate list
+# Bad: 创建大型中间列表
 total = sum([x * x for x in range(1_000_000)])
 ```
 
-### Generator Functions
+### 生成器函数
 
 ```python
 def read_large_file(path: str) -> Iterator[str]:
@@ -305,9 +305,9 @@ for line in read_large_file("huge.txt"):
     process(line)
 ```
 
-## Data Classes and Named Tuples
+## 数据类和命名元组 (Data Classes and Named Tuples)
 
-### Data Classes
+### 数据类 (Data Classes)
 
 ```python
 from dataclasses import dataclass, field
@@ -330,7 +330,7 @@ user = User(
 )
 ```
 
-### Data Classes with Validation
+### 带验证的数据类
 
 ```python
 @dataclass
@@ -347,7 +347,7 @@ class User:
             raise ValueError(f"Invalid age: {self.age}")
 ```
 
-### Named Tuples
+### 命名元组 (Named Tuples)
 
 ```python
 from typing import NamedTuple
@@ -366,9 +366,9 @@ p2 = Point(3, 4)
 print(p1.distance(p2))  # 5.0
 ```
 
-## Decorators
+## 装饰器 (Decorators)
 
-### Function Decorators
+### 函数装饰器
 
 ```python
 import functools
@@ -392,7 +392,7 @@ def slow_function():
 # slow_function() prints: slow_function took 1.0012s
 ```
 
-### Parameterized Decorators
+### 参数化装饰器
 
 ```python
 def repeat(times: int):
@@ -414,7 +414,7 @@ def greet(name: str) -> str:
 # greet("Alice") returns ["Hello, Alice!", "Hello, Alice!", "Hello, Alice!"]
 ```
 
-### Class-Based Decorators
+### 基于类的装饰器
 
 ```python
 class CountCalls:
@@ -436,9 +436,9 @@ def process():
 # Each call to process() prints the call count
 ```
 
-## Concurrency Patterns
+## 并发模式 (Concurrency Patterns)
 
-### Threading for I/O-Bound Tasks
+### 用于 I/O 密集型任务的线程 (Threading)
 
 ```python
 import concurrent.futures
@@ -464,7 +464,7 @@ def fetch_all_urls(urls: list[str]) -> dict[str, str]:
     return results
 ```
 
-### Multiprocessing for CPU-Bound Tasks
+### 用于 CPU 密集型任务的多进程 (Multiprocessing)
 
 ```python
 def process_data(data: list[int]) -> int:
@@ -478,7 +478,7 @@ def process_all(datasets: list[list[int]]) -> list[int]:
     return results
 ```
 
-### Async/Await for Concurrent I/O
+### 用于并发 I/O 的 Async/Await
 
 ```python
 import asyncio
@@ -497,9 +497,9 @@ async def fetch_all(urls: list[str]) -> dict[str, str]:
     return dict(zip(urls, results))
 ```
 
-## Package Organization
+## 包组织 (Package Organization)
 
-### Standard Project Layout
+### 标准项目布局
 
 ```
 myproject/
@@ -526,10 +526,10 @@ myproject/
 └── .gitignore
 ```
 
-### Import Conventions
+### 导入约定
 
 ```python
-# Good: Import order - stdlib, third-party, local
+# Good: 导入顺序 - 标准库，第三方，本地
 import os
 import sys
 from pathlib import Path
@@ -540,11 +540,11 @@ from fastapi import FastAPI
 from mypackage.models import User
 from mypackage.utils import format_name
 
-# Good: Use isort for automatic import sorting
+# Good: 使用 isort 自动排序导入
 # pip install isort
 ```
 
-### __init__.py for Package Exports
+### 用于包导出的 __init__.py
 
 ```python
 # mypackage/__init__.py
@@ -552,25 +552,25 @@ from mypackage.utils import format_name
 
 __version__ = "1.0.0"
 
-# Export main classes/functions at package level
+# 在包级别导出主要类/函数
 from mypackage.models import User, Post
 from mypackage.utils import format_name
 
 __all__ = ["User", "Post", "format_name"]
 ```
 
-## Memory and Performance
+## 内存和性能 (Memory and Performance)
 
-### Using __slots__ for Memory Efficiency
+### 使用 __slots__ 提高内存效率
 
 ```python
-# Bad: Regular class uses __dict__ (more memory)
+# Bad: 常规类使用 __dict__ (更多内存)
 class Point:
     def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
 
-# Good: __slots__ reduces memory usage
+# Good: __slots__ 减少内存使用
 class Point:
     __slots__ = ['x', 'y']
 
@@ -579,33 +579,33 @@ class Point:
         self.y = y
 ```
 
-### Generator for Large Data
+### 用于大数据的生成器
 
 ```python
-# Bad: Returns full list in memory
+# Bad: 在内存中返回完整列表
 def read_lines(path: str) -> list[str]:
     with open(path) as f:
         return [line.strip() for line in f]
 
-# Good: Yields lines one at a time
+# Good: 一次生成一行
 def read_lines(path: str) -> Iterator[str]:
     with open(path) as f:
         for line in f:
             yield line.strip()
 ```
 
-### Avoid String Concatenation in Loops
+### 避免循环中的字符串连接
 
 ```python
-# Bad: O(n²) due to string immutability
+# Bad: O(n²) 由于字符串不可变
 result = ""
 for item in items:
     result += str(item)
 
-# Good: O(n) using join
+# Good: O(n) 使用 join
 result = "".join(str(item) for item in items)
 
-# Good: Using StringIO for building
+# Good: 使用 StringIO 构建
 from io import StringIO
 
 buffer = StringIO()
@@ -614,12 +614,12 @@ for item in items:
 result = buffer.getvalue()
 ```
 
-## Python Tooling Integration
+## Python 工具集成 (Python Tooling Integration)
 
-### Essential Commands
+### 基本命令
 
 ```bash
-# Code formatting
+# 代码格式化
 black .
 isort .
 
@@ -627,21 +627,21 @@ isort .
 ruff check .
 pylint mypackage/
 
-# Type checking
+# 类型检查
 mypy .
 
-# Testing
+# 测试
 pytest --cov=mypackage --cov-report=html
 
-# Security scanning
+# 安全扫描
 bandit -r .
 
-# Dependency management
+# 依赖管理
 pip-audit
 safety check
 ```
 
-### pyproject.toml Configuration
+### pyproject.toml 配置
 
 ```toml
 [project]
@@ -681,69 +681,69 @@ testpaths = ["tests"]
 addopts = "--cov=mypackage --cov-report=term-missing"
 ```
 
-## Quick Reference: Python Idioms
+## 快速参考：Python 习语 (Quick Reference: Python Idioms)
 
-| Idiom | Description |
+| 习语 | 描述 |
 |-------|-------------|
-| EAFP | Easier to Ask Forgiveness than Permission |
-| Context managers | Use `with` for resource management |
-| List comprehensions | For simple transformations |
-| Generators | For lazy evaluation and large datasets |
-| Type hints | Annotate function signatures |
-| Dataclasses | For data containers with auto-generated methods |
-| `__slots__` | For memory optimization |
-| f-strings | For string formatting (Python 3.6+) |
-| `pathlib.Path` | For path operations (Python 3.4+) |
-| `enumerate` | For index-element pairs in loops |
+| EAFP | 请求宽恕比许可更容易 |
+| 上下文管理器 | 使用 `with` 进行资源管理 |
+| 列表推导式 | 用于简单转换 |
+| 生成器 | 用于惰性求值和大数据集 |
+| 类型提示 | 注解函数签名 |
+| 数据类 | 用于带有自动生成方法的数据容器 |
+| `__slots__` | 用于内存优化 |
+| f-strings | 用于字符串格式化 (Python 3.6+) |
+| `pathlib.Path` | 用于路径操作 (Python 3.4+) |
+| `enumerate` | 用于循环中的索引-元素对 |
 
-## Anti-Patterns to Avoid
+## 要避免的反模式 (Anti-Patterns to Avoid)
 
 ```python
-# Bad: Mutable default arguments
+# Bad: 可变默认参数
 def append_to(item, items=[]):
     items.append(item)
     return items
 
-# Good: Use None and create new list
+# Good: 使用 None 并创建新列表
 def append_to(item, items=None):
     if items is None:
         items = []
     items.append(item)
     return items
 
-# Bad: Checking type with type()
+# Bad: 使用 type() 检查类型
 if type(obj) == list:
     process(obj)
 
-# Good: Use isinstance
+# Good: 使用 isinstance
 if isinstance(obj, list):
     process(obj)
 
-# Bad: Comparing to None with ==
+# Bad: 使用 == 与 None 比较
 if value == None:
     process()
 
-# Good: Use is
+# Good: 使用 is
 if value is None:
     process()
 
 # Bad: from module import *
 from os.path import *
 
-# Good: Explicit imports
+# Good: 显式导入
 from os.path import join, exists
 
-# Bad: Bare except
+# Bad: 裸 except
 try:
     risky_operation()
 except:
     pass
 
-# Good: Specific exception
+# Good: 特定异常
 try:
     risky_operation()
 except SpecificError as e:
     logger.error(f"Operation failed: {e}")
 ```
 
-__Remember__: Python code should be readable, explicit, and follow the principle of least surprise. When in doubt, prioritize clarity over cleverness.
+__记住__: Python 代码应该是可读的、显式的，并遵循最少意外原则。如有疑问，优先考虑清晰度而不是聪明。

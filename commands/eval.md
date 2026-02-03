@@ -1,54 +1,54 @@
-# Eval Command
+# Eval 命令 (Eval Command)
 
-Manage eval-driven development workflow.
+管理 eval 驱动开发工作流。
 
-## Usage
+## 用法
 
 `/eval [define|check|report|list] [feature-name]`
 
-## Define Evals
+## 定义 Evals (Define Evals)
 
 `/eval define feature-name`
 
-Create a new eval definition:
+创建新的 eval 定义：
 
-1. Create `.claude/evals/feature-name.md` with template:
+1. 使用模板创建 `.claude/evals/feature-name.md`：
 
 ```markdown
 ## EVAL: feature-name
 Created: $(date)
 
-### Capability Evals
-- [ ] [Description of capability 1]
-- [ ] [Description of capability 2]
+### 能力 Evals (Capability Evals)
+- [ ] [能力 1 的描述]
+- [ ] [能力 2 的描述]
 
-### Regression Evals
-- [ ] [Existing behavior 1 still works]
-- [ ] [Existing behavior 2 still works]
+### 回归 Evals (Regression Evals)
+- [ ] [现有行为 1 仍然工作]
+- [ ] [现有行为 2 仍然工作]
 
-### Success Criteria
-- pass@3 > 90% for capability evals
-- pass^3 = 100% for regression evals
+### 成功标准 (Success Criteria)
+- 能力 evals pass@3 > 90%
+- 回归 evals pass^3 = 100%
 ```
 
-2. Prompt user to fill in specific criteria
+2. 提示用户填写具体标准
 
-## Check Evals
+## 检查 Evals (Check Evals)
 
 `/eval check feature-name`
 
-Run evals for a feature:
+为功能运行 evals：
 
-1. Read eval definition from `.claude/evals/feature-name.md`
-2. For each capability eval:
-   - Attempt to verify criterion
-   - Record PASS/FAIL
-   - Log attempt in `.claude/evals/feature-name.log`
-3. For each regression eval:
-   - Run relevant tests
-   - Compare against baseline
-   - Record PASS/FAIL
-4. Report current status:
+1. 从 `.claude/evals/feature-name.md` 读取 eval 定义
+2. 对于每个能力 eval：
+   - 尝试验证标准
+   - 记录 PASS/FAIL
+   - 将尝试记录在 `.claude/evals/feature-name.log` 中
+3. 对于每个回归 eval：
+   - 运行相关测试
+   - 与基准进行比较
+   - 记录 PASS/FAIL
+4. 报告当前状态：
 
 ```
 EVAL CHECK: feature-name
@@ -58,11 +58,11 @@ Regression: X/Y passing
 Status: IN PROGRESS / READY
 ```
 
-## Report Evals
+## 报告 Evals (Report Evals)
 
 `/eval report feature-name`
 
-Generate comprehensive eval report:
+生成综合 eval 报告：
 
 ```
 EVAL REPORT: feature-name
@@ -96,11 +96,11 @@ RECOMMENDATION
 [SHIP / NEEDS WORK / BLOCKED]
 ```
 
-## List Evals
+## 列出 Evals (List Evals)
 
 `/eval list`
 
-Show all eval definitions:
+显示所有 eval 定义：
 
 ```
 EVAL DEFINITIONS
@@ -110,11 +110,11 @@ feature-search    [5/5 passing] READY
 feature-export    [0/4 passing] NOT STARTED
 ```
 
-## Arguments
+## 参数
 
 $ARGUMENTS:
-- `define <name>` - Create new eval definition
-- `check <name>` - Run and check evals
-- `report <name>` - Generate full report
-- `list` - Show all evals
-- `clean` - Remove old eval logs (keeps last 10 runs)
+- `define <name>` - 创建新 eval 定义
+- `check <name>` - 运行并检查 evals
+- `report <name>` - 生成完整报告
+- `list` - 显示所有 evals
+- `clean` - 移除旧 eval 日志 (保留最后 10 次运行)
