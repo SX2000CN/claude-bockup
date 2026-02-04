@@ -65,6 +65,7 @@
 | `/checkpoint` | `checkpoint.md` | 创建当前进度的检查点 (保存状态) |
 | `/learn` | `learn.md` | 触发学习机制，总结当前会话经验 |
 | `/refactor-clean` | `refactor-clean.md` | 启动代码清理任务 |
+| `/sessions` | `sessions.md` | **会话管理**：列出、加载、别名管理历史会话 |
 
 ---
 
