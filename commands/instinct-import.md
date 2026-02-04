@@ -8,16 +8,10 @@ command: true
 
 ## 实现 (Implementation)
 
-使用插件根路径运行 instinct CLI：
+运行 instinct CLI：
 
 ```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" import <file-or-url> [--dry-run] [--force] [--min-confidence 0.7]
-```
-
-或者如果未设置 `CLAUDE_PLUGIN_ROOT` (手动安装)：
-
-```bash
-python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py import <file-or-url>
+python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py import <file-or-url> [--dry-run] [--force] [--min-confidence 0.7]
 ```
 
 从以下来源导入直觉：

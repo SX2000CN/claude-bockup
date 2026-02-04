@@ -47,7 +47,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/suggest-compact.js\""
+            "command": "node \"~/.claude/scripts/hooks/suggest-compact.js\""
           }
         ],
         "description": "在逻辑间隔建议手动压缩"
@@ -59,7 +59,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/pre-compact.js\""
+            "command": "node \"~/.claude/scripts/hooks/pre-compact.js\""
           }
         ],
         "description": "在上下文压缩前保存状态"
@@ -71,7 +71,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/session-start.js\""
+            "command": "node \"~/.claude/scripts/hooks/session-start.js\""
           }
         ],
         "description": "在新会话加载先前的上下文并检测包管理器"
@@ -137,7 +137,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/check-console-log.js\""
+            "command": "node \"~/.claude/scripts/hooks/check-console-log.js\""
           }
         ],
         "description": "每次响应后检查修改的文件中是否存在 console.log"
@@ -149,7 +149,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/session-end.js\""
+            "command": "node \"~/.claude/scripts/hooks/session-end.js\""
           }
         ],
         "description": "结束时持久化会话状态"
@@ -159,7 +159,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/evaluate-session.js\""
+            "command": "node \"~/.claude/scripts/hooks/evaluate-session.js\""
           }
         ],
         "description": "评估会话以提取可重用模式"

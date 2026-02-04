@@ -8,13 +8,7 @@ command: true
 
 ## 实现
 
-使用插件根路径运行 instinct CLI：
-
-```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" evolve [--generate]
-```
-
-或者如果未设置 `CLAUDE_PLUGIN_ROOT`（手动安装）：
+运行 instinct CLI：
 
 ```bash
 python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py evolve [--generate]
