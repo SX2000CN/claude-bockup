@@ -26,18 +26,18 @@ claude-bockup/
 ├── skills/       # 🧠 技能知识库 (复制到 ~/.claude/skills/)
 ├── commands/     # ⚡ 斜杠指令 (复制到 ~/.claude/commands/)
 ├── contexts/     # 🎭 上下文模式 (复制到 ~/.claude/contexts/)
+├── scripts/      # 📜 自动化脚本 (复制到 ~/.claude/scripts/)
 ├── hooks/        # 🔌 钩子配置 (参考 hooks.json 修改 settings.json)
-├── scripts/      # 📜 自动化脚本 (保留在本地，被 Hooks 引用)
 └── mcp-configs/  # 🛠️ MCP 工具配置 (参考 mcp-servers.json)
 ```
 
 ## 🚀 快速开始
 
-1.  **Clone 本仓库** 到本地一个固定目录：
+1.  **Clone 本仓库**：
     ```bash
-    git clone -b claude-backup https://github.com/SX2000CN/claude-bockup.git ~/tools/claude-bockup
+    git clone -b claude-backup https://github.com/SX2000CN/claude-bockup.git
     ```
-2.  按照 **[PATH_MAPPING.md](./PATH_MAPPING.md)** 的指引，将各目录下的 `.md` 文件复制到你的 Claude 配置目录。
+2.  按照 **[PATH_MAPPING.md](./PATH_MAPPING.md)** 的指引，将各目录下的文件复制到你的 Claude 配置目录（推荐所有目录都复制到 `~/.claude/` 下）。
 3.  (进阶) 修改你的 `settings.json` 以启用 Hooks 和 Scripts。
 
 ---
